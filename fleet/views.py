@@ -15,12 +15,12 @@ class VehicleListView(APIView):
     def get(self, request):
         """Get all vehicles"""
         vehicles = Vehicle.objects.all()
-        serializer = VehicleSerializer(vehicles, many=True)
+        serializer = VehicleSerializer(vehicles, many=True, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request):
         """Create a new vehicle"""
-        serializer = VehicleSerializer(data=request.data)
+        serializer = VehicleSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -50,7 +50,7 @@ class VehicleDetailView(APIView):
                 {'error': 'Vehicle not found'},
                 status=status.HTTP_404_NOT_FOUND
             )
-        serializer = VehicleSerializer(vehicle)
+        serializer = VehicleSerializer(vehicle, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def put(self, request, pk):
@@ -61,7 +61,7 @@ class VehicleDetailView(APIView):
                 {'error': 'Vehicle not found'},
                 status=status.HTTP_404_NOT_FOUND
             )
-        serializer = VehicleSerializer(vehicle, data=request.data)
+        serializer = VehicleSerializer(vehicle, data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)

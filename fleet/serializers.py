@@ -12,6 +12,7 @@ class VehicleSerializer(serializers.ModelSerializer):
             'vehicle_name',
             'vehicle_code',
             'plate_number',
+            'vehicle_image',
             'vehicle_type',
             'monthly_start_mileage',
             'monthly_end_mileage',
