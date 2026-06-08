@@ -1,11 +1,13 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from .models import Vehicle
 from .serializers import VehicleSerializer
 
 
 class VehicleListView(APIView):
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
     """
     API view to list all vehicles or create a new vehicle.
     GET: Returns a list of all vehicles
@@ -28,6 +30,7 @@ class VehicleListView(APIView):
 
 
 class VehicleDetailView(APIView):
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
     """
     API view to retrieve, update, or delete a specific vehicle.
     GET: Returns vehicle details
