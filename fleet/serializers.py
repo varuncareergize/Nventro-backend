@@ -3,6 +3,8 @@ from .models import Vehicle
 
 
 class VehicleSerializer(serializers.ModelSerializer):
+    monthly_mileage = serializers.SerializerMethodField()
+
     class Meta:
         model = Vehicle
         fields = [
@@ -11,7 +13,9 @@ class VehicleSerializer(serializers.ModelSerializer):
             'vehicle_code',
             'plate_number',
             'vehicle_type',
-            'current_mileage',
+            'monthly_start_mileage',
+            'monthly_end_mileage',
+            'monthly_mileage',
             'fuel_level',
             'oil_level',
             'battery_health',
@@ -19,4 +23,7 @@ class VehicleSerializer(serializers.ModelSerializer):
             'next_service_date',
             'status',
         ]
-        read_only_fields = ['id']
+        read_only_fields = ['id', 'monthly_mileage']
+
+    def get_monthly_mileage(self, obj):
+        return obj.monthly_end_mileage - obj.monthly_start_mileage
