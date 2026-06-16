@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
-
+import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'fleet',
     'rest_framework',
     'corsheaders',
+    'parts',
 ]
 
 MIDDLEWARE = [
@@ -83,7 +84,7 @@ DATABASES = {
     }
 }
 
-
+DATABASES['default']= dj_database_url.parse('postgresql://jereh_backend_user:CgQ0lMJbNHtg3BYq8teifrmdkC7G1xlc@dpg-d8o0nj8k1i2s73aja1jg-a.oregon-postgres.render.com/jereh_backend', conn_max_age=600, ssl_require=True)
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
 

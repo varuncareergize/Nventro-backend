@@ -1,5 +1,17 @@
 from django.db import models
 
+
+class Company(models.Model):
+    name = models.CharField(max_length=200)
+    address = models.TextField()
+    image = models.ImageField(upload_to='companies/', blank=True, null=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Vehicle(models.Model):
 
     STATUS_CHOICES = [
@@ -8,13 +20,21 @@ class Vehicle(models.Model):
         ('OVERDUE', 'Overdue'),
     ]
 
+    company = models.ForeignKey(
+        Company,
+        on_delete=models.CASCADE,
+        related_name='vehicles',
+        null=True,
+        blank=True
+    )
+
     vehicle_name = models.CharField(max_length=100)
     vehicle_code = models.CharField(max_length=50, unique=True)
     plate_number = models.CharField(max_length=30)
     vehicle_image = models.ImageField(upload_to='vehicles/', blank=True, null=True)
 
     vehicle_type = models.CharField(max_length=50)
-    month = models.CharField(max_length=7, blank=True, null=True)  # Format: YYYY-MM
+    month = models.CharField(max_length=7, blank=True, null=True)
     monthly_start_mileage = models.PositiveIntegerField(default=0)
     monthly_end_mileage = models.PositiveIntegerField(default=0)
     kt_number = models.CharField(max_length=50, blank=True, null=True)
