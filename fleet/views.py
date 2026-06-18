@@ -5,7 +5,6 @@ from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from .models import Vehicle
 from .serializers import VehicleSerializer
 
-
 class VehicleListView(APIView):
     parser_classes = [MultiPartParser, FormParser, JSONParser]
     """
