@@ -134,4 +134,5 @@ SESSION_COOKIE_SECURE = True
 CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1:8000",
     "https://ozone-backend-l13p.onrender.com",
+    "http://localhost:5173"
 ]
