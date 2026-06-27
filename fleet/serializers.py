@@ -4,7 +4,7 @@ from .models import Vehicle
 
 class VehicleSerializer(serializers.ModelSerializer):
     vehicle_image_url = serializers.SerializerMethodField(read_only=True)
-    monthly_mileage = serializers.SerializerMethodField(read_only=True)
+    service_km_left = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Vehicle
@@ -19,12 +19,13 @@ class VehicleSerializer(serializers.ModelSerializer):
             'service_km',
             'current_km',
             'balance_service_km',
-            'model_name',
+            'model_year',
             'ards_status',
             'insurance_upto',
             'registration_upto',
             'vehicle_image',
             'vehicle_image_url',
+            'service_km_left',
             'remarks',
             'created_at',
         ]
@@ -40,5 +41,5 @@ class VehicleSerializer(serializers.ModelSerializer):
             return request.build_absolute_uri(url)
         return url
 
-    def get_monthly_mileage(self, obj):
-        return obj.current_km - obj.service_km
+    def get_service_km_left(self, obj):
+        return obj.service_km - obj.current_km
