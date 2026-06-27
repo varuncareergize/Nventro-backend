@@ -9,7 +9,7 @@ class Part(models.Model):
         ('OUT_OF_STOCK', 'Out Of Stock'),
     ]
 
-    sku = models.CharField(max_length=50, unique=True)
+    part_number = models.CharField(max_length=100, unique=True)
     part_name = models.CharField(max_length=200)
     category = models.CharField(max_length=100)
 

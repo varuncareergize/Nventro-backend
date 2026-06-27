@@ -1,6 +1,6 @@
 from django.db import models
 from fleet.models import Vehicle
-
+from parts.models import Part
 
 class VehicleService(models.Model):
 
@@ -159,24 +159,7 @@ class ServiceDocument(models.Model):
     def __str__(self):
         return f"Document {self.id}"
 
-class Part(models.Model):
 
-    part_name = models.CharField(max_length=200)
-
-    part_number = models.CharField(
-        max_length=100,
-        blank=True,
-        null=True
-    )
-
-    unit_price = models.DecimalField(
-        max_digits=10,
-        decimal_places=2,
-        default=0
-    )
-
-    def __str__(self):
-        return self.part_name
 
 class ServicePart(models.Model):
 

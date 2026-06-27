@@ -4,10 +4,9 @@ from .models import (
     ServiceItem,
     VehicleServiceItem,
     ServiceDocument,
-    Part,
     ServicePart,
 )
-
+from parts.models import Part
 
 class VehicleServiceSerializer(serializers.ModelSerializer):
     class Meta:
