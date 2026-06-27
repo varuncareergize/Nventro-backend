@@ -10,23 +10,25 @@ class VehicleSerializer(serializers.ModelSerializer):
         model = Vehicle
         fields = [
             'id',
+            'company',
+            'si_no',
             'vehicle_name',
-            'vehicle_code',
+            'vehicle_type',
             'plate_number',
+            'vehicle_using_by',
+            'service_km',
+            'current_km',
+            'balance_service_km',
+            'model_name',
+            'ards_status',
+            'insurance_upto',
+            'registration_upto',
             'vehicle_image',
             'vehicle_image_url',
-            'vehicle_type',
-            'monthly_start_mileage',
-            'monthly_end_mileage',
-            'monthly_mileage',
-            'fuel_level',
-            'oil_level',
-            'battery_health',
-            'assigned_driver',
-            'next_service_date',
-            'status',
+            'remarks',
+            'created_at',
         ]
-        read_only_fields = ['id', 'vehicle_image_url', 'monthly_mileage']
+        read_only_fields = ['id', 'vehicle_image_url', 'created_at']
 
     def get_vehicle_image_url(self, obj):
         if not obj.vehicle_image:
@@ -39,4 +41,4 @@ class VehicleSerializer(serializers.ModelSerializer):
         return url
 
     def get_monthly_mileage(self, obj):
-        return obj.monthly_end_mileage - obj.monthly_start_mileage
+        return obj.current_km - obj.service_km
