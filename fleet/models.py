@@ -25,7 +25,8 @@ class Vehicle(models.Model):
         on_delete=models.CASCADE,
         related_name='vehicles',
         null=True,
-        blank=True
+        blank=True,
+        default=1
     )
 
     si_no = models.PositiveIntegerField(blank=True, null=True)
