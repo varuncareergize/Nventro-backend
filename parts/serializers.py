@@ -1,6 +1,39 @@
 from rest_framework import serializers
 from .models import Part, PartUsage, PartTransaction
 
+class PartCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Part
+        fields = [
+            'part_number', 'part_name', 'category', 'description',
+            'stock_quantity', 'minimum_stock', 'unit_price'
+        ]
+        extra_kwargs = {
+            'part_number': {'required': True},
+            'part_name': {'required': True},
+            'category': {'required': True},
+            'description': {'required': False, 'allow_blank': True},
+            'stock_quantity': {'required': True},
+            'minimum_stock': {'required': True},
+            'unit_price': {'required': True},
+        }
+
+    def validate_stock_quantity(self, value):
+        if value < 0:
+            raise serializers.ValidationError('Stock quantity cannot be negative.')
+        return value
+
+    def validate_minimum_stock(self, value):
+        if value < 0:
+            raise serializers.ValidationError('Minimum stock cannot be negative.')
+        return value
+
+    def validate_unit_price(self, value):
+        if value < 0:
+            raise serializers.ValidationError('Unit price cannot be negative.')
+        return value
+
+
 class PartSerializer(serializers.ModelSerializer):
     image_url = serializers.SerializerMethodField(read_only=True)
 

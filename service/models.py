@@ -60,11 +60,6 @@ class VehicleService(models.Model):
         null=True
     )
 
-    mechanic_name = models.CharField(
-        max_length=255,
-        blank=True,
-        null=True
-    )
 
     next_service_due_km = models.PositiveIntegerField(
         blank=True,
@@ -96,49 +91,6 @@ class VehicleService(models.Model):
     def __str__(self):
         return f"{self.vehicle.vehicle_name} - {self.service_date}"
 # Create your models here.
-
-class ServiceItem(models.Model):
-
-    name = models.CharField(
-        max_length=150,
-        unique=True
-    )
-
-    description = models.TextField(
-        blank=True,
-        null=True
-    )
-
-    def __str__(self):
-        return self.name
-
-class VehicleServiceItem(models.Model):
-
-    service = models.ForeignKey(
-        VehicleService,
-        on_delete=models.CASCADE,
-        related_name='service_items'
-    )
-
-    item = models.ForeignKey(
-        ServiceItem,
-        on_delete=models.CASCADE
-    )
-
-    cost = models.DecimalField(
-        max_digits=10,
-        decimal_places=2,
-        default=0
-    )
-
-    remarks = models.TextField(
-        blank=True,
-        null=True
-    )
-
-    def __str__(self):
-        return f"{self.service.id} - {self.item.name}"
-
 
 class ServiceDocument(models.Model):
 

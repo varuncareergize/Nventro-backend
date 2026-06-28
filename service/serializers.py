@@ -1,32 +1,17 @@
 from rest_framework import serializers
-from .models import (
-    VehicleService,
-    ServiceItem,
-    VehicleServiceItem,
-    ServiceDocument,
-    ServicePart,
-)
-from parts.models import Part
+from .models import VehicleService, ServiceDocument, ServicePart
+
 
 class VehicleServiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = VehicleService
-        fields = '__all__'
+        fields = [
+            'id', 'vehicle', 'service_date', 'odometer_reading', 'service_type',
+            'estimated_cost', 'actual_cost', 'work_performed', 'breakdown_details',
+            'accident_details', 'workshop_name', 'next_service_due_km',
+            'next_service_date', 'vehicle_downtime_days', 'remarks', 'created_at', 'updated_at'
+        ]
         read_only_fields = ['id', 'created_at', 'updated_at']
-
-
-class ServiceItemSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ServiceItem
-        fields = '__all__'
-        read_only_fields = ['id']
-
-
-class VehicleServiceItemSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = VehicleServiceItem
-        fields = '__all__'
-        read_only_fields = ['id']
 
 
 class ServiceDocumentSerializer(serializers.ModelSerializer):
@@ -46,15 +31,8 @@ class ServiceDocumentSerializer(serializers.ModelSerializer):
         return None
 
 
-class PartSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Part
-        fields = '__all__'
-        read_only_fields = ['id']
-
-
 class ServicePartSerializer(serializers.ModelSerializer):
     class Meta:
         model = ServicePart
-        fields = '__all__'
-        read_only_fields = ['id']
+        fields = ['id', 'service', 'part', 'quantity', 'unit_price', 'total_price']
+        read_only_fields = ['id', 'total_price']

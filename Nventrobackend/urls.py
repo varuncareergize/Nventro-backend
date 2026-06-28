@@ -24,6 +24,7 @@ urlpatterns = [
     path('api/', include('fleet.urls')),
     path('api/', include('Authentication.urls')),
     path('api/parts/', include('parts.urls')),
+    path('api/', include('service.urls')),
 ]
 
 if settings.DEBUG:

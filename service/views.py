@@ -3,20 +3,10 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 
-from .models import (
-    VehicleService,
-    ServiceItem,
-    VehicleServiceItem,
-    ServiceDocument,
-    Part,
-    ServicePart,
-)
+from .models import VehicleService, ServiceDocument, ServicePart
 from .serializers import (
     VehicleServiceSerializer,
-    ServiceItemSerializer,
-    VehicleServiceItemSerializer,
     ServiceDocumentSerializer,
-    PartSerializer,
     ServicePartSerializer,
 )
 
@@ -88,26 +78,6 @@ class VehicleServiceDetailView(BaseRetrieveUpdateDeleteAPIView):
     serializer_class = VehicleServiceSerializer
 
 
-class ServiceItemListView(BaseListCreateAPIView):
-    model = ServiceItem
-    serializer_class = ServiceItemSerializer
-
-
-class ServiceItemDetailView(BaseRetrieveUpdateDeleteAPIView):
-    model = ServiceItem
-    serializer_class = ServiceItemSerializer
-
-
-class VehicleServiceItemListView(BaseListCreateAPIView):
-    model = VehicleServiceItem
-    serializer_class = VehicleServiceItemSerializer
-
-
-class VehicleServiceItemDetailView(BaseRetrieveUpdateDeleteAPIView):
-    model = VehicleServiceItem
-    serializer_class = VehicleServiceItemSerializer
-
-
 class ServiceDocumentListView(BaseListCreateAPIView):
     model = ServiceDocument
     serializer_class = ServiceDocumentSerializer
@@ -116,16 +86,6 @@ class ServiceDocumentListView(BaseListCreateAPIView):
 class ServiceDocumentDetailView(BaseRetrieveUpdateDeleteAPIView):
     model = ServiceDocument
     serializer_class = ServiceDocumentSerializer
-
-
-class PartListView(BaseListCreateAPIView):
-    model = Part
-    serializer_class = PartSerializer
-
-
-class PartDetailView(BaseRetrieveUpdateDeleteAPIView):
-    model = Part
-    serializer_class = PartSerializer
 
 
 class ServicePartListView(BaseListCreateAPIView):
