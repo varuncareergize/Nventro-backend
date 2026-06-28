@@ -36,6 +36,28 @@ class ServiceDocumentSerializer(serializers.ModelSerializer):
         return None
 
 
+class ServicePartCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ServicePart
+        fields = ['service', 'part', 'quantity', 'unit_price']
+        extra_kwargs = {
+            'service': {'required': True},
+            'part': {'required': True},
+            'quantity': {'required': True},
+            'unit_price': {'required': True},
+        }
+
+    def validate_quantity(self, value):
+        if value <= 0:
+            raise serializers.ValidationError('Quantity must be greater than 0.')
+        return value
+
+    def validate_unit_price(self, value):
+        if value < 0:
+            raise serializers.ValidationError('Unit price cannot be negative.')
+        return value
+
+
 class ServicePartSerializer(serializers.ModelSerializer):
     part = serializers.SerializerMethodField(read_only=True)
     vehicle = serializers.SerializerMethodField(read_only=True)

@@ -8,6 +8,7 @@ from .serializers import (
     VehicleServiceSerializer,
     ServiceDocumentSerializer,
     ServicePartSerializer,
+    ServicePartCreateSerializer,
 )
 
 
@@ -98,6 +99,14 @@ class ServiceDocumentDetailView(BaseRetrieveUpdateDeleteAPIView):
 class ServicePartListView(BaseListCreateAPIView):
     model = ServicePart
     serializer_class = ServicePartSerializer
+
+    def post(self, request):
+        serializer = ServicePartCreateSerializer(data=request.data, context={'request': request})
+        if serializer.is_valid():
+            service_part = serializer.save()
+            response_serializer = ServicePartSerializer(service_part, context={'request': request})
+            return Response(response_serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ServicePartDetailView(BaseRetrieveUpdateDeleteAPIView):
