@@ -37,7 +37,28 @@ class ServiceDocumentSerializer(serializers.ModelSerializer):
 
 
 class ServicePartSerializer(serializers.ModelSerializer):
+    part = serializers.SerializerMethodField(read_only=True)
+    vehicle = serializers.SerializerMethodField(read_only=True)
+    date = serializers.SerializerMethodField(read_only=True)
+    qty = serializers.SerializerMethodField(read_only=True)
+    tech = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = ServicePart
-        fields = ['id', 'service', 'part', 'quantity', 'unit_price', 'total_price']
-        read_only_fields = ['id', 'total_price']
+        fields = ['id', 'part', 'vehicle', 'date', 'qty', 'tech']
+        read_only_fields = ['id', 'part', 'vehicle', 'date', 'qty', 'tech']
+
+    def get_part(self, obj):
+        return obj.part.part_name if obj.part else None
+
+    def get_vehicle(self, obj):
+        return obj.service.vehicle.vehicle_name if obj.service and obj.service.vehicle else None
+
+    def get_date(self, obj):
+        return obj.service.service_date.strftime('%b %d, %Y') if obj.service and obj.service.service_date else None
+
+    def get_qty(self, obj):
+        return obj.quantity
+
+    def get_tech(self, obj):
+        return obj.service.workshop_name if obj.service and obj.service.workshop_name else 'N/A'
