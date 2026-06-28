@@ -3,15 +3,20 @@ from .models import VehicleService, ServiceDocument, ServicePart
 
 
 class VehicleServiceSerializer(serializers.ModelSerializer):
+    vehicle_name = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = VehicleService
         fields = [
-            'id', 'vehicle', 'service_date', 'odometer_reading', 'service_type',
+            'id', 'vehicle', 'vehicle_name', 'service_date', 'odometer_reading', 'service_type',
             'estimated_cost', 'actual_cost', 'work_performed', 'breakdown_details',
             'accident_details', 'workshop_name', 'next_service_due_km',
             'next_service_date', 'vehicle_downtime_days', 'remarks', 'created_at', 'updated_at'
         ]
-        read_only_fields = ['id', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'vehicle_name', 'created_at', 'updated_at']
+
+    def get_vehicle_name(self, obj):
+        return obj.vehicle.vehicle_name if obj.vehicle else None
 
 
 class ServiceDocumentSerializer(serializers.ModelSerializer):

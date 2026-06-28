@@ -72,6 +72,13 @@ class VehicleServiceListView(BaseListCreateAPIView):
     model = VehicleService
     serializer_class = VehicleServiceSerializer
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        vehicle_id = self.request.query_params.get('vehicle_id')
+        if vehicle_id:
+            queryset = queryset.filter(vehicle_id=vehicle_id)
+        return queryset
+
 
 class VehicleServiceDetailView(BaseRetrieveUpdateDeleteAPIView):
     model = VehicleService
